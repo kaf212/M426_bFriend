@@ -4,12 +4,12 @@ const {connect} = require("mongoose");
 const cors = require("cors")
 
 server.use(cors({
-    origin: process.env.MONGO_HOST,
+    origin: "http://localhost:63342",
 }));
 
 server.use(express.json())
 
-connect(process.env.MONGO_HOST, {
+connect("mongodb://27017", {
     useNewUrlParser: true
 })
     .then(() => console.log('MongoDB connected'))

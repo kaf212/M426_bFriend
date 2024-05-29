@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/kaf212/M426_bFriend/issues"
   },
-  "homepage": "https://github.com/kaf212/M426_bFriend#readme"
+  "homepage": "https://github.com/kaf212/M426_bFriend#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.4.0"
+  }
 }
