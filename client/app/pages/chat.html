@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat App</title>
+  <link rel="stylesheet" href="chat.css">
+</head>
+<body>
+<button id="chat-toggle-button">Chat</button>
+<div id="chat-container" class="hidden">
+  <div id="chat-list-container" class="visible">
+    <div class="chat-header">
+      <h2>Chats</h2>
+      <button id="chat-close-button">&times;</button>
+    </div>
+    <div id="chat-list">
+    </div>
+    <div class="input-group">
+      <input type="text" id="new-chat-email" placeholder="Enter email to start chat...">
+      <input type="text" id="new-chat-nickname" placeholder="Enter nickname...">
+      <button id="add-chat-button">Add Chat</button>
+    </div>
+  </div>
+  <div id="chat-window" class="hidden">
+    <div class="chat-header">
+      <button id="back-button">&larr; Back</button>
+      <h2 id="chat-with">Chat with</h2>
+    </div>
+    <div id="chat-messages"></div>
+    <div class="input-group">
+      <input type="text" id="message-input" placeholder="Type a message...">
+      <button id="send-button">Send</button>
+    </div>
+  </div>
+</div>
+
+<script src="chat.js"></script>
+</body>
+</html>
