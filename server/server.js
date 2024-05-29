@@ -1,15 +1,18 @@
 const express = require("express");
-const server = express();
+const app = express();
 const {connect} = require("mongoose");
 const Users = require('./models/user-model.js');
+const userRoutes = require("./routes/user-routes.js")
 
 const cors = require("cors")
 
-server.use(cors({
+app.use(cors({
     origin: "http://localhost:63342",
 }));
 
-server.use(express.json())
+app.use(express.json())
+
+app.use("/api/users", userRoutes)
 
 connect("mongodb://127.0.0.1:27017/bFriend", {
     useNewUrlParser: true,
@@ -32,9 +35,7 @@ async function insertTestdata() {
     ]);
 }
 
-insertTestdata()
-
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
+app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
