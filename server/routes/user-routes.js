@@ -46,5 +46,15 @@ router.put("/", async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
-
+router.delete("/:id", async (req, res) => {
+    try {
+        const result = await Users.findByIdAndDelete(req.params.id);
+        if (!result) {
+            return res.status(404).json({ message: "Benutzer nicht gefunden" });
+        }
+        res.json({ message: "Benutzer erfolgreich gelöscht" });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
 module.exports = router;
