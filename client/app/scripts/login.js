@@ -3,24 +3,22 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
-    fetch('/api/login', {
+    fetch('http://localhost:3000/api/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ username, password })
     })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Erfolgreich eingeloggt!');
-            } else {
-                alert('Fehler: ' + data.message);
+        .then(res => {
+            console.log(res)
+            if (res.status === 401) {
+                alert("Wrong password")
+            }
+            if (res.status === 200) {
+                alert("login successful")
             }
         })
-        .catch(error => {
-            alert('Fehler beim Einloggen: ' + error);
-        });
 });
 
 document.getElementById('registerForm').addEventListener('submit', function(event) {
@@ -36,14 +34,4 @@ document.getElementById('registerForm').addEventListener('submit', function(even
         body: JSON.stringify({ username: newUsername, password: newPassword })
     })
         .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Erfolgreich registriert!');
-            } else {
-                alert('Fehler: ' + data.message);
-            }
-        })
-        .catch(error => {
-            alert('Fehler bei der Registrierung: ' + error);
-        });
 });
