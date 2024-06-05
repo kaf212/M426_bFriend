@@ -14,38 +14,66 @@ document.addEventListener('DOMContentLoaded', () => {
     const backButton = document.getElementById('back-button');
     const chatWithHeader = document.getElementById('chat-with');
 
-    // Simulated list of chats and messages
-    const chats = {};
-
     let currentChat = null;
 
-    // Function to display chat list
-    function displayChatList() {
-        chatList.innerHTML = '';
-        for (const chatEmail in chats) {
-            const chatItem = document.createElement('div');
-            chatItem.className = 'chat-item';
-            chatItem.innerText = `${chats[chatEmail].nickname}`;
-            chatItem.addEventListener('click', () => {
-                openChat(chatEmail);
-            });
-            chatList.appendChild(chatItem);
-        }
+    async function fetchChats() {
+        const response = await fetch('http://localhost:3000/api/users');
+        return await response.json();
     }
 
-    // Function to open a chat
-    function openChat(chatEmail) {
+    async function fetchChatByEmail(email) {
+        const response = await fetch(`http://localhost:3000/api/users/${email}`);
+        return await response.json();
+    }
+
+    async function addChat(email, nickname) {
+        const response = await fetch('http://localhost:3000/api/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, username: nickname, password: "defaultPassword" })
+        });
+        return await response.json();
+    }
+
+    async function addMessage(email, message) {
+        const response = await fetch(`http://localhost:3000/api/users/${email}/messages`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(message)
+        });
+        return await response.json();
+    }
+
+    function displayChatList(users) {
+        chatList.innerHTML = '';
+        users.forEach(user => {
+            const chatItem = document.createElement('div');
+            chatItem.className = 'chat-item';
+            chatItem.innerText = `${user.username}`;
+            chatItem.addEventListener('click', () => {
+                openChat(user.email);
+            });
+            chatList.appendChild(chatItem);
+        });
+    }
+
+    async function openChat(chatEmail) {
         currentChat = chatEmail;
+        const chat = await fetchChatByEmail(chatEmail);
         chatMessages.innerHTML = '';
-        chatWithHeader.innerText = `Chat with ${chats[chatEmail].nickname}`;
-        chats[chatEmail].messages.forEach(message => {
+        chatWithHeader.innerText = `Chat with ${chat.username}`;
+        // Assuming chat has messages array
+        chat.messages.forEach(message => {
             addMessageToWindow(message.user, message.text);
         });
         chatWindow.classList.add('visible');
         chatListContainer.classList.remove('visible');
     }
 
-    // Function to add message to chat window
     function addMessageToWindow(user, text) {
         const messageElement = document.createElement('div');
         messageElement.className = 'message';
@@ -54,24 +82,23 @@ document.addEventListener('DOMContentLoaded', () => {
         chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
     }
 
-    // Event listener for the send button
-    sendButton.addEventListener('click', () => {
+    sendButton.addEventListener('click', async () => {
         const text = messageInput.value;
         if (text.trim() && currentChat) {
             const message = { user: 'You', text };
-            chats[currentChat].messages.push(message);
+            await addMessage(currentChat, message);
             addMessageToWindow(message.user, message.text);
             messageInput.value = '';
         }
     });
 
-    // Event listener for adding a new chat
-    addChatButton.addEventListener('click', () => {
+    addChatButton.addEventListener('click', async () => {
         const email = newChatEmailInput.value;
         const nickname = newChatNicknameInput.value;
-        if (email.trim() && nickname.trim() && !chats[email]) {
-            chats[email] = { nickname, messages: [] };
-            displayChatList();
+        if (email.trim() && nickname.trim()) {
+            await addChat(email, nickname);
+            const users = await fetchChats();
+            displayChatList(users);
             newChatEmailInput.value = '';
             newChatNicknameInput.value = '';
         } else {
@@ -79,19 +106,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Event listener for the back button
     backButton.addEventListener('click', () => {
         chatWindow.classList.remove('visible');
         chatListContainer.classList.add('visible');
     });
 
-    // Toggle chat visibility
-    chatToggleButton.addEventListener('click', () => {
+    chatToggleButton.addEventListener('click', async () => {
         chatContainer.classList.toggle('visible');
-        displayChatList();
+        const users = await fetchChats();
+        displayChatList(users);
     });
 
-    // Close chat
     chatCloseButton.addEventListener('click', () => {
         chatContainer.classList.remove('visible');
         chatWindow.classList.remove('visible');
