@@ -28,7 +28,7 @@ document.getElementById('registerForm').addEventListener('submit', function(even
     const newUsername = document.getElementById('newUsername').value;
     const newPassword = document.getElementById('newPassword').value;
 
-    fetch('/api/register', {
+    fetch('http://localhost:3000/api/login/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
