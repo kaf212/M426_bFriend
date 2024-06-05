@@ -14,3 +14,34 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+function addTask() {
+    let inputTask = document.getElementById('tohobby').value
+    let todoList = document.getElementById('hobbylist')
+
+
+    let taskDiv = document.createElement('div')
+    taskDiv.classList.add('Item')
+
+    let taskText = document.createTextNode(inputTask)
+
+
+    let deleteButton = document.createElement('button')
+    deleteButton.innerText = ' X '
+    deleteButton.classList.add('deletePart')
+
+
+    deleteButton.addEventListener('click', (event) => {
+        event.target.parentElement.remove()
+    })
+
+    taskDiv.appendChild(taskText)
+    taskDiv.appendChild(deleteButton)
+    todoList.appendChild(taskDiv)
+
+
+}
+
+document.querySelector('.calendar-icon').addEventListener('click', () => {
+    document.getElementById('geburtsdatum').focus();
+});
