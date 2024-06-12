@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Initial User Login</title>
+    <link rel="stylesheet" href="initial_login.css">
+    <script src="initial_login.js"></script>
+
+</head>
+<body>
+<header>
+    <nav>
+    </nav>
+</header>
+
+<main>
+    <h2>Personalia</h2>
+    <form action="/submit" method="post" id="personalForm">
+        <label for="fname">First name:</label>
+        <input type="text" id="fname" name="fname" required><br>
+
+        <label for="lname">Last name:</label>
+        <input type="text" id="lname" name="lname" required><br>
+
+        <label for="clocation">Land:</label>
+        <select id="clocation" name="clocation" required><br>
+            <option value="EU">Europe</option>
+            <option value="AS">Asia</option>
+            <option value="AF">Africa</option>
+            <option value="USA">United States</option>
+        </select>
+
+        <label for="birthdate">Birthdate:</label>
+        <div class="date-container">
+            <input type="date" id="birthdate" name="birthdate" required>
+        </div>
+
+
+        <h3>Hobbies</h3>
+        <div id="hobbylist">
+            <div>
+                <label for="tohobby"></label>
+                <input type="text" id="tohobby" value="" name="tohobby">
+            </div>
+            <div>
+                <label for="addHobby"></label>
+                <input type="button" id="addHobby" value="Submit" onclick="addTask()">
+            </div>
+        </div>
+
+
+    </form>
+
+</main>
+
+<footer>
+</footer>
+
+</body>
+</html>
