@@ -10,7 +10,7 @@ router.post("/", async (req, res) => {
     console.log(user.password)
     console.log(req.body.password)
     if (user.password === req.body.password) {
-        res.sendStatus(200)
+        res.send(user._id).status(200)
     }
     else {
         res.sendStatus(401)

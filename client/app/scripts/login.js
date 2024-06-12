@@ -1,3 +1,5 @@
+
+
 document.getElementById('loginForm').addEventListener('submit', function(event) {
     event.preventDefault();
     const username = document.getElementById('username').value;
@@ -11,14 +13,22 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
         body: JSON.stringify({ username, password })
     })
         .then(res => {
-            console.log(res)
             if (res.status === 401) {
-                alert("Wrong password")
+                alert("Wrong password");
+                return;
             }
             if (res.status === 200) {
-                alert("login successful")
+                return res.json()
             }
         })
+        .then(data => {
+            if (data) {
+                window.open(`../pages/edit_user.html?userid=${data}`, '_blank');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 });
 
 document.getElementById('registerForm').addEventListener('submit', function(event) {
