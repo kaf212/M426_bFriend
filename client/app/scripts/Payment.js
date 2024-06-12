@@ -1,18 +1,27 @@
 document.addEventListener("DOMContentLoaded", () => {
     let submitButton = document.getElementById('submit');
-
-    
     
     async function payment(){
-        let email = document.getElementById('emailInput');
-        let password = document.getElementById('passwordInput')
+        let inputEmail = document.getElementById('emailInput');
+        let inputPassword = document.getElementById('passwordInput')
 
-        console.log(password.value)
+        console.log(inputPassword.value)
 
-        //Hash password in base64
-        const hashedPassword = btoa(password.value)
+        //Hash password
+        const hashedPassword = btoa(inputPassword.value)
         //check database if data is correct
-        
+        const response = await fetch("http://localhost:3000/api/users/checkCredentials", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: inputEmail.value,
+                password: hashedPassword
+            })
+        })
+        const jsonResponse = await response.json()
+        alert(JSON.stringify(jsonResponse))
         //show confirmation, if accepts continue
 
         //send data to api so the databse updates to an active user with the chosen subscribtion, and backend takes money on successful update
@@ -22,12 +31,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
     submitButton.addEventListener('click', payment);
 
-})
-
-router.post("/checkCredentials", async (req, res) => {
-    const email = req.body.email;
-    const passowrd = req.body.password;
-
-    //check if email, password in database, if yes respond with {email:true, password:true}
-    //If password is false {email:true, password:false} if email doesn't exist and password correct {email:false, password:false}
 })
