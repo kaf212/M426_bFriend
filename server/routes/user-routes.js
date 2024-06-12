@@ -13,7 +13,8 @@ router.get("/", async (req, res) => {
     }
 })
 
-router.get("/:id", async (req, res)=>{
+//musste geändert werden wegen checkCredentials
+router.get("/id/:id", async (req, res)=>{
     try {
         const user = await Users.findOne({"_id": new mongo.ObjectId(req.params.id)});
         res.json(user);
@@ -47,4 +48,30 @@ router.put("/", async (req, res) => {
     }
 });
 
+router.post("/checkCredentials", async (req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    let currentState = {email:false, password:false}
+    if (email && password){
+        const targetUser = await userSchema.findOne({
+            "contact.email": email
+        });
+        if (targetUser){
+            currentState = {
+                email:true,
+                password:false
+            }
+            if (targetUser.password == password){
+                currentState = {
+                    email:true,
+                    password:true
+                }
+            }
+        }
+        res.status(200).send(currentState);
+    }else {
+        res.status(400).send("data is missing");
+    }
+})
+    
 module.exports = router;
