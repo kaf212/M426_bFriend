@@ -10,46 +10,94 @@
 <body>
 <header>
     <nav>
+        <ul>
+            <li><a href="#" data-section="section1">Profile</a></li>
+            <li><a href="#" data-section="section2">Privacy and Security</a></li>
+            <li><a href="#" data-section="section3">Purchases</a></li>
+        </ul>
     </nav>
 </header>
 
-<main>
-    <h2>Personalia</h2>
-    <form action="/submit" method="post" id="personalForm">
-        <label for="fname">First name:</label>
-        <input type="text" id="fname" name="fname" required><br>
+<main style="margin-left:25%;padding:1px 16px;height:1000px;">
 
-        <label for="lname">Last name:</label>
-        <input type="text" id="lname" name="lname" required><br>
+    <section id="section1" class="active">
+        <h2>Personalia</h2>
+        <div class="profile-picture-section">
 
-        <label for="clocation">Land:</label>
-        <select id="clocation" name="clocation" required><br>
-            <option value="EU">Europe</option>
-            <option value="AS">Asia</option>
-            <option value="AF">Africa</option>
-            <option value="USA">United States</option>
-        </select>
+            <img id="profile-picture" src="default-profile.jpg" alt="Profilbild">
+            <input type="file" id="profile-picture-input" accept="image/*">
+        </div>
+        <form action="/submit" method="post" id="personalForm">
+            <label for="uname">Username:</label>
+            <input type="text" id="uname" name="uname" value="FlyhingHamster123"><br>
 
-        <label for="birthdate">Birthdate:</label>
-        <div class="date-container">
-            <input type="date" id="birthdate" name="birthdate" required>
+            <label for="fname">First name:</label>
+            <input type="text" id="fname" name="fname" required><br>
+
+            <label for="lname">Last name:</label>
+            <input type="text" id="lname" name="lname" required><br>
+
+            <label for="clocation">Land:</label>
+            <select id="clocation" name="clocation" required><br>
+                <option value="EU">Europe</option>
+                <option value="AS">Asia</option>
+                <option value="AF">Africa</option>
+                <option value="USA">United States</option>
+            </select>
+
+            <label for="birthdate">Birthdate:</label>
+            <div class="date-container">
+                <input type="date" id="birthdate" name="birthdate" required>
+            </div>
+
+            <h3>Hobbies</h3>
+            <div id="hobbylist">
+                <div>
+                    <label for="tohobby"></label>
+                    <input type="text" id="tohobby" value="" name="tohobby">
+                </div>
+                <div id="hobbylistext">
+                    <label for="addHobby"></label>
+                    <input type="button" id="addHobby" value="Submit" onclick="addTask()">
+                </div>
+            </div>
+        </form>
+    </section>
+    <section id="section2">
+        <h1>Privacy and Security</h1>
+
+        <div class="olddat">
+            Email address currently in use: <p class="hidesec"></p>
+        </div>
+
+        <div class="olddat">
+            Password currently in use: <p class="hidesec"></p>
         </div>
 
 
-        <h3>Hobbies</h3>
-        <div id="hobbylist">
-            <div>
-                <label for="tohobby"></label>
-                <input type="text" id="tohobby" value="" name="tohobby">
-            </div>
-            <div>
-                <label for="addHobby"></label>
-                <input type="button" id="addHobby" value="Submit" onclick="addTask()">
-            </div>
-        </div>
+        <form id="profile-form">
+            <label for="email">New E-mail adress:</label>
+            <input type="email" id="email" name="email">
+
+            <label for="password">New password:</label>
+            <input type="password" id="password" name="password">
+
+            <label for="newpassword"> Confirm new password:</label>
+            <input type="password" id="newpassword" name="newpassword">
+
+            <button type="submit">Speichern</button>
+        </form>
+    </section>
+    <section id="section3">
+        hi
+    </section>
+    <section id="section4">
+        hi
+    </section>
 
 
-    </form>
+
+
 
 </main>
 
