@@ -23,13 +23,7 @@ router.get("/:id", async (req, res)=>{
 })
 
 router.post("/", async (req, res) => {
-    try {
-        delete req.body._id;
-        await Users.insertMany([req.body]);
-        res.sendStatus(200)
-    } catch (err) {
-        res.status(500).json({message: err.message});
-    }
+
 })
 
 

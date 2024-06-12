@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+</head>
+<style>
+  .notice-container {
+      width: 100vw;
+      background-color: lightgreen;
+      padding: 20px;
+      margin: 0;
+      display: none;
+  }
+
+</style>
+<body>
+<div class='notice-container'></div>
+<h2>Login</h2>
+<form id="loginForm">
+  <label for="username">Benutzername:</label>
+  <input type="text" id="username" name="username" required>
+  <label for="password">Passwort:</label>
+  <input type="password" id="password" name="password" required>
+  <button type="submit">Einloggen</button>
+</form>
+
+<br>
+<a href='./register.html'>Registrieren</a>
+
+<script src="../scripts/login.js" defer></script>
+</body>
+</html>
