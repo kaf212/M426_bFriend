@@ -4,6 +4,8 @@ const mongo = require("mongodb")
 const {json} = require("express");
 const router = express.Router();
 
+router.use(express.json())
+
 router.post("/", async (req, res) => {
     const user = await Users.findOne({"username": req.body.username})
     console.log(user)
@@ -20,6 +22,7 @@ router.post("/", async (req, res) => {
 router.post("/register", async (req, res) => {
     try {
         delete req.body._id;
+        console.log(req.body)
         await Users.insertMany([req.body]);
         res.sendStatus(200)
     } catch (err) {

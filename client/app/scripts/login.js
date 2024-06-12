@@ -23,7 +23,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
         })
         .then(data => {
             if (data) {
-                window.open(`../pages/edit_user.html?userid=${data}`, '_blank');
+                window.location = `../index.html?userid=${data}`
             }
         })
         .catch(error => {
