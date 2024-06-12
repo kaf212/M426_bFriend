@@ -75,6 +75,12 @@ document.getElementById('profile-picture-input').addEventListener('change', func
 });
 
 
+function deaktivateacc() {
+    const deactivate = document.getElementById("deaktivate")
+    deactivate.addEventListener('click', (event) =>{
+        window.location.href = 'deactivated_window.html';
+    })
+}
 
 
 
