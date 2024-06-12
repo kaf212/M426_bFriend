@@ -1,3 +1,24 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const links = document.querySelectorAll('nav ul li a');
+    const sections = document.querySelectorAll('section');
+
+    links.forEach(link => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault();
+            const targetSection = event.target.getAttribute('data-section');
+
+            sections.forEach(section => {
+                if (section.id === targetSection) {
+                    section.classList.add('active');
+                } else {
+                    section.classList.remove('active');
+                }
+            });
+        });
+    });
+});
+
+
 document.addEventListener('DOMContentLoaded', function() {
     const inputs = document.querySelectorAll('#personalForm input, #personalForm select');
     inputs.forEach((input, index) => {
@@ -15,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+
 function addTask() {
     let inputTask = document.getElementById('tohobby').value
     let todoList = document.getElementById('hobbylist')
@@ -26,17 +48,12 @@ function addTask() {
     let taskText = document.createTextNode(inputTask)
 
 
-    let deleteButton = document.createElement('button')
-    deleteButton.innerText = ' X '
-    deleteButton.classList.add('deletePart')
 
-
-    deleteButton.addEventListener('click', (event) => {
-        event.target.parentElement.remove()
+    taskDiv.addEventListener('click', (event) => {
+        event.target.remove()
     })
 
     taskDiv.appendChild(taskText)
-    taskDiv.appendChild(deleteButton)
     todoList.appendChild(taskDiv)
 
 
@@ -45,3 +62,19 @@ function addTask() {
 document.querySelector('.calendar-icon').addEventListener('click', () => {
     document.getElementById('geburtsdatum').focus();
 });
+
+document.getElementById('profile-picture-input').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('profile-picture').src = e.target.result;
+        }
+        reader.readAsDataURL(file);
+    }
+});
+
+
+
+
+
