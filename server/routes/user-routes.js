@@ -53,8 +53,8 @@ router.post("/checkCredentials", async (req, res) => {
     const password = req.body.password;
     let currentState = {email:false, password:false}
     if (email && password){
-        const targetUser = await userSchema.findOne({
-            "contact.email": email
+        const targetUser = await Users.findOne({
+            "email": email
         });
         if (targetUser){
             currentState = {

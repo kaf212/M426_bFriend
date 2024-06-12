@@ -10,14 +10,6 @@ app.use(cors({
     origin: "http://localhost:63342",
 }));
 
-app.use(cors({
-    origin: "http://localhost:5500",
-}));
-
-app.use(cors({
-    origin: "http://localhost:*",
-}));
-
 
 app.use(express.json())
 

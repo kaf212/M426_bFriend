@@ -6,11 +6,12 @@ document.addEventListener("DOMContentLoaded", () => {
         let inputPassword = document.getElementById('passwordInput')
 
         console.log(inputPassword.value)
+        console.log(inputEmail.value)
 
         //Hash password
         const hashedPassword = btoa(inputPassword.value)
         //check database if data is correct
-        const response = await fetch("http://localhost:3000/api/users/checkCredentials", {
+        const response = await fetch("http://localhost:3000/api/users/checkcredentials", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
