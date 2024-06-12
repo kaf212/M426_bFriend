@@ -24,6 +24,10 @@ document.getElementById('personalForm').addEventListener('submit', function(even
             if (response.ok) {
                 return response.json();
             }
+            if (response.status === 409) {
+                alert("Username is already taken")
+                return response.json
+            }
             throw new Error('Network response was not ok.');
         })
         .then(data => {

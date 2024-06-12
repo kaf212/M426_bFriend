@@ -21,13 +21,21 @@ router.post("/", async (req, res) => {
 
 router.post("/register", async (req, res) => {
     try {
+        // Check if the username already exists in the database
+        const existingUser = await Users.findOne({ username: req.body.username });
+        if (existingUser) {
+            // If username already exists, send back a status code indicating conflict
+            return res.status(409).json({ message: "Username already exists" });
+        }
+
+        // If username does not exist, proceed to insert the new user
         delete req.body._id;
-        console.log(req.body)
         await Users.insertMany([req.body]);
-        res.sendStatus(200)
+        res.sendStatus(200);
     } catch (err) {
-        res.status(500).json({message: err.message});
+        res.status(500).json({ message: err.message });
     }
-})
+});
+
 
 module.exports = router;
