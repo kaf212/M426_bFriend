@@ -25,54 +25,57 @@ async function deleteUser(userId) {
     }
 }
 
-async function deleteUserById() {
-    const users = await fetchUsers();
-    console.log("Aktuelle Benutzerliste:");
-    users.forEach(user => {
-        console.log(`${user._id}. ${user.username} ${user.email}`);
-    });
-
-    const wichu = prompt('ID des Benutzers eingeben den Sie löschen möchten:');
-    if (wichu !== null) {
-        const userIdToDelete = wichu; // Benutzer-ID ist bereits ein String, keine Konvertierung notwendig
-        const userIndex = users.findIndex(user => user._id === userIdToDelete);
-
-        if (userIndex !== -1) {
-            deleteUser(userIdToDelete).then(() => {
-                console.log(`Benutzer ${users[userIndex].username} ${users[userIndex].email} wurde gelöscht.`);
-                console.log("Aktualisierte Benutzerliste:");
-                users.splice(userIndex, 1); // Benutzer aus der lokalen Liste entfernen
-                users.forEach(user => {
-                    console.log(`${user._id}. ${user.username} ${user.email}`);
-                });
-            });
-        } else {
-            console.log("Ungültige ID");
+async function banUser(userId) {
+    try {
+        const response = await fetch(`http://localhost:3000/api/users/${userId}`, {
+            method: 'PUT'
+        });
+        if (!response.ok) {
+            throw new Error('Benutzer konnte nicht gesperrt werden');
         }
+        const data = await response.json();
+        console.log(data.message);
+        loadUsers(); // Aktualisieren der Benutzerliste nach dem Bann
+    } catch (error) {
+        console.error('Fehler beim Sperren des Benutzers:', error);
     }
 }
 
 async function loadUsers() {
     const users = await fetchUsers();
+    console.log(users); // Überprüfen Sie die Daten in der Konsole
     const userList = document.getElementById('userList');
     userList.innerHTML = ''; // Leeren der Liste
 
     users.forEach(user => {
         const li = document.createElement('li');
         li.textContent = `${user._id}. ${user.username} ${user.email}`;
+        if (user.isBanned) {
+            li.classList.add('banned');
+            console.log(`User ${user.username} is banned`); // Überprüfen Sie die Klassenzuordnung in der Konsole
+            console.log(li); // Überprüfen Sie das Listenelement in der Konsole
+        }
 
-        const button = document.createElement('button');
-        button.textContent = 'Löschen';
-        button.addEventListener('click', () => {
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Löschen';
+        deleteButton.addEventListener('click', () => {
             if (confirm('Möchten Sie diesen Benutzer wirklich löschen?')) {
                 deleteUser(user._id);
             }
         });
 
-        li.appendChild(button);
+        const banButton = document.createElement('button');
+        banButton.textContent = 'Sperren';
+        banButton.addEventListener('click', () => {
+            if (confirm('Möchten Sie diesen Benutzer wirklich sperren?')) {
+                banUser(user._id);
+            }
+        });
+
+        li.appendChild(deleteButton);
+        li.appendChild(banButton);
         userList.appendChild(li);
     });
 }
 
-// Anfangs die Benutzerliste laden
 loadUsers();
