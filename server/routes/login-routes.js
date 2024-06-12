@@ -8,24 +8,27 @@ router.use(express.json())
 
 router.post("/", async (req, res) => {
     const user = await Users.findOne({"username": req.body.username})
-    console.log(user)
-    console.log(user.password)
-    console.log(req.body.password)
-    if (user.password === req.body.password) {
+    if (!user) {
+        res.sendStatus(404)
+    } else if (user.password === req.body.password) {
         res.send(user._id).status(200)
-    }
-    else {
+    } else {
         res.sendStatus(401)
     }
 })
 
+
 router.post("/register", async (req, res) => {
 // Check if the username already exists in the database
-    const existingUser = await Users.findOne({ username: req.body.username });
+    const existingUser = await Users.findOne({ username: req.body.username});
+    const existingUserEmail = await Users.findOne({ email: req.body.email});
     if (existingUser) {
-        // If username already exists, send back a status code indicating conflict
-        return res.status(409).json({ message: "Username already exists" });
+        return res.status(409).json({ message: "username taken" });
     }
+    else if (existingUserEmail) {
+        return res.status(410).json({message: "email taken"})
+    }
+
 
     // If username does not exist, proceed to insert the new user
     delete req.body._id;

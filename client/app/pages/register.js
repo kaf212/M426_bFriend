@@ -27,12 +27,15 @@ document.getElementById('personalForm').addEventListener('submit', function(even
             if (response.status === 409) {
                 alert("Username is already taken")
             }
+            if (response.status === 410) {
+                alert("Email is already in use")
+            }
             else {
                 throw new Error('Network response was not ok.');
             }
         })
         .then(data => {
-            if (data.ok) {
+            if (data.message && data.message === "ok") {
                 // Handle successful response from backend
                 console.log('Response from backend:', data);
                 // You can do further processing here, like displaying a success message
