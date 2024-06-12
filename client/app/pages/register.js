@@ -26,18 +26,19 @@ document.getElementById('personalForm').addEventListener('submit', function(even
             }
             if (response.status === 409) {
                 alert("Username is already taken")
-                return response.json
             }
-            throw new Error('Network response was not ok.');
+            else {
+                throw new Error('Network response was not ok.');
+            }
         })
         .then(data => {
-            // Handle successful response from backend
-            console.log('Response from backend:', data);
-            // You can do further processing here, like displaying a success message
+            if (data.ok) {
+                // Handle successful response from backend
+                console.log('Response from backend:', data);
+                // You can do further processing here, like displaying a success message
+                window.location = "./login.html?newUser=true"
+            }
+
         })
-        .catch(error => {
-            // Handle error
-            console.error('Error:', error);
-            // You can display an error message or perform other error handling actions
-        });
+
 });

@@ -1,3 +1,11 @@
+// Get the current URL
+const urlParams = new URLSearchParams(window.location.search);
+
+if (urlParams.get('newUser') === "true") {
+    document.querySelector(".notice-container").style.display = "block"
+    document.querySelector(".notice-container").textContent = "User was created successfully!"
+}
+
 
 
 document.getElementById('loginForm').addEventListener('submit', function(event) {
@@ -22,14 +30,16 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
             }
         })
         .then(data => {
-            if (data) {
-                window.location = `../index.html?userid=${data}`
+            if (data && data.ok) { // Check if data exists and has ok property
+                window.location = `login.html?userid=${data}` // Assuming data is the user ID
             }
         })
         .catch(error => {
             console.error('Error:', error);
         });
 });
+
+
 
 document.getElementById('registerForm').addEventListener('submit', function(event) {
     event.preventDefault();
