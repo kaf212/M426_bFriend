@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const userID = await getUserID('userID');
 
         if (userID){
-            const response = await fetch(`http://localhost:3000/api/users/:${userID}`, {
+            const response = await fetch(`http://localhost:3000/api/users/${userID}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
